@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JsonTransform.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -33,7 +33,7 @@ namespace JsonTransform
                 return;
             }
 
-            var transform = ParseTransformFile(transformFile);
+            var transform = CompositeTransform.Load(transformFile);
             var source = LoadFile(sourceFile);
             transform.Apply(source);
             var outputText = JsonConvert.SerializeObject(source);
@@ -80,19 +80,6 @@ namespace JsonTransform
             Console.WriteLine("     If a property called $existing is found, the object containing it is replaced with the value located by");
             Console.WriteLine("     the path, after the value of the $existing property is processed as a JSON Path (Json.Net) against that");
             Console.WriteLine("     element.");
-        }
-
-        private static IObjectTransform ParseTransformFile(string transformFile)
-        {
-            var rawTransformObject = LoadFile(transformFile);
-            var transforms = new List<IObjectTransform>();
-
-            foreach (var property in rawTransformObject.Properties())
-            {
-                transforms.Add(new Transform(property));
-            }
-
-            return new CompositeTransform(transforms);
         }
 
         private static JObject LoadFile(string file)

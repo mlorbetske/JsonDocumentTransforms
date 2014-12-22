@@ -1,6 +1,6 @@
 using Newtonsoft.Json.Linq;
 
-namespace JsonTransform
+namespace JsonTransform.Core
 {
     public interface IObjectTransform
     {

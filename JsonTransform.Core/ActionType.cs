@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace JsonTransform
+namespace JsonTransform.Core
 {
     public enum ActionType
     {

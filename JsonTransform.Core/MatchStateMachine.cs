@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace JsonTransform
+namespace JsonTransform.Core
 {
     public class MatchStateMachine
     {

@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace JsonTransform
+namespace JsonTransform.Core
 {
     [JsonObject]
     public class TransformAction

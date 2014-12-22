@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
 using Newtonsoft.Json.Linq;
 
-namespace JsonTransform
+namespace JsonTransform.Core
 {
     public class CompositeTransform : IObjectTransform
     {
@@ -18,6 +19,20 @@ namespace JsonTransform
             {
                 transform.Apply(source);
             }
+        }
+
+        public static IObjectTransform Load(string filePath)
+        {
+            var fileText = File.ReadAllText(filePath);
+            var rawTransformObject = JObject.Parse(fileText);
+            var transforms = new List<IObjectTransform>();
+
+            foreach (var property in rawTransformObject.Properties())
+            {
+                transforms.Add(new Transform(property));
+            }
+
+            return new CompositeTransform(transforms);
         }
     }
 }
