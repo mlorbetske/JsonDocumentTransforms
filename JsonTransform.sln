@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonTransform", "JsonTransf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonTransform.Core", "JsonTransform.Core\JsonTransform.Core.csproj", "{2B2CB2D3-3227-4305-A0CE-4D8FD72CCFDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonTransform.Test", "JsonTransform.Test\JsonTransform.Test.csproj", "{FF4D8796-3044-4934-AF04-1B8775FE93AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2B2CB2D3-3227-4305-A0CE-4D8FD72CCFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B2CB2D3-3227-4305-A0CE-4D8FD72CCFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B2CB2D3-3227-4305-A0CE-4D8FD72CCFDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF4D8796-3044-4934-AF04-1B8775FE93AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF4D8796-3044-4934-AF04-1B8775FE93AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF4D8796-3044-4934-AF04-1B8775FE93AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF4D8796-3044-4934-AF04-1B8775FE93AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,14 @@
+﻿{
+    "a/**/b": {
+        "action": {
+            "type": "replace",
+            "value": [ ],
+            "matchPredicates": [
+                {
+                    "type": "JsonTransform.Core.ValuePredicates.TypeMatch, JsonTransform.Core",
+                    "configuration": "integer"
+                }
+            ]
+        }
+    }
+}

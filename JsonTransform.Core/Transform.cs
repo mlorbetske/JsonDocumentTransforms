@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace JsonTransform.Core
@@ -89,16 +90,16 @@ namespace JsonTransform.Core
 
             foreach (var path in allPaths)
             {
-                if (IsMatch(path.Key))
+                if (IsMatch(path.Key, path.Value))
                 {
                     _action.Apply(path.Value, _action.Value);
                 }
             }
         }
 
-        private bool IsMatch(string[] key)
+        private bool IsMatch(string[] key, JToken value)
         {
-            return _matcher.IsMatch(key);
+            return _matcher.IsMatch(key) && _action.MatchPredicates.All(x => x.IsMatch(value));
         }
     }
 }

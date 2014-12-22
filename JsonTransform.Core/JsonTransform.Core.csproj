@@ -46,11 +46,13 @@
   <ItemGroup>
     <Compile Include="ActionType.cs" />
     <Compile Include="CompositeTransform.cs" />
+    <Compile Include="IMatchPredicate.cs" />
     <Compile Include="IObjectTransform.cs" />
     <Compile Include="MatchStateMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="TransformAction.cs" />
+    <Compile Include="ValuePredicates\ValueMatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

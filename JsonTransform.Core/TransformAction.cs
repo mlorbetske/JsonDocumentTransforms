@@ -1,16 +1,54 @@
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JsonTransform.Core
 {
     [JsonObject]
     public class TransformAction
     {
+        public TransformAction()
+        {
+            MatchPredicates = Enumerable.Empty<IMatchPredicate>();
+        }
+
         [JsonProperty("type")]
         public ActionType Type { get; set; }
 
         [JsonProperty("value")]
         public JToken Value { get; set; }
+
+        [JsonProperty("matchPredicates")]
+        public List<MatchPredicateDefinition> MatchPredicateDefinitions
+        {
+            get { return null; }
+            set
+            {
+                var predicates = new List<IMatchPredicate>();
+                MatchPredicates = predicates;
+
+                if (value == null)
+                {
+                    return;
+                }
+
+                foreach (var definition in value)
+                {
+                    var type = System.Type.GetType(definition.Type);
+                    if (typeof (IMatchPredicate).IsAssignableFrom(type))
+                    {
+                        var instance = (IMatchPredicate) Activator.CreateInstance(type);
+                        instance.Configure(definition.Configuration);
+                        predicates.Add(instance);
+                    }
+                }
+            }
+        }
+
+        [JsonIgnore]
+        public IEnumerable<IMatchPredicate> MatchPredicates { get; private set; }
 
         public void Apply(JToken target, JToken definition)
         {
@@ -69,5 +107,14 @@ namespace JsonTransform.Core
                     break;
             }
         }
+    }
+
+    public class MatchPredicateDefinition
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("configuration")]
+        public JToken Configuration { get; set; }
     }
 }
