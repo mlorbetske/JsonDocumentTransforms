@@ -11,13 +11,21 @@ namespace JsonTransform
     {
         static void Main(string[] args)
         {
-            if (args.Length < 2 || args.Length > 3 || args.Any(x => new[]{"/?", "-?", "/help", "-help"}.Contains(x)))
+            if (args.Length < 2 || args.Length > 4 || args.Any(x => new[]{"/?", "-?", "/help", "-help"}.Contains(x)))
             {
                 ShowHelp();
                 return;
             }
 
-            var sourceFile = args[0];
+            var customFlag = args[0];
+            var argOffset = 0;
+
+            if (string.Equals(customFlag, "-custom", StringComparison.OrdinalIgnoreCase))
+            {
+                argOffset = 1;
+            }
+
+            var sourceFile = args[argOffset];
 
             if (!File.Exists(sourceFile))
             {
@@ -25,7 +33,7 @@ namespace JsonTransform
                 return;
             }
 
-            var transformFile = args[1];
+            var transformFile = args[argOffset + 1];
 
             if (!File.Exists(transformFile))
             {
@@ -33,15 +41,18 @@ namespace JsonTransform
                 return;
             }
 
-            var transform = CompositeTransform.Load(transformFile);
+            var transform = argOffset == 1 ? CompositeTransform.Load(transformFile) : PatchDocument.Load(transformFile);
             JToken source = LoadFile(sourceFile);
             transform.Apply(ref source);
             var outputText = JsonConvert.SerializeObject(source);
 
-            if (args.Length == 3)
+            if (args.Length - argOffset == 3)
             {
-                var outputFile = args[2];
-                File.WriteAllText(outputFile, outputText);
+                var outputFile = args[args.Length - 1];
+                var fullPath = Path.Combine(Environment.CurrentDirectory, outputFile);
+                var outputDir = Path.GetDirectoryName(fullPath);
+                Directory.CreateDirectory(outputDir);
+                File.WriteAllText(fullPath, outputText);
             }
             else
             {
@@ -51,9 +62,10 @@ namespace JsonTransform
 
         private static void ShowHelp(Exception ex = null)
         {
-            Console.WriteLine("JsonTransform.exe InputFile.json TransformFile.json [Output.json]");
+            Console.WriteLine("JsonTransform.exe [-custom] InputFile.json TransformFile.json [Output.json]");
+            Console.WriteLine("-custom                  - If specified, indicates that the transform file is not a JSON Patch file");
             Console.WriteLine("InputFile.json           - A JSON document");
-            Console.WriteLine("TransformFile.json       - A JSON transform");
+            Console.WriteLine("TransformFile.json       - A JSON transform, JSON Patch format is expected unless the -custom option is specified");
             Console.WriteLine("Output.json (Optional)   - The location to write the output");
             Console.WriteLine();
 
@@ -63,6 +75,15 @@ namespace JsonTransform
                 return;
             }
 
+            Console.WriteLine("JSON Patch");
+            Console.WriteLine("==========");
+            Console.WriteLine("Official JSON Patch website: http://jsonpatch.com/");
+            Console.WriteLine("Official JSON Patch JSON schema: http://json.schemastore.org/json-patch");
+            Console.WriteLine("JSON Patch IETF Standard (RFC 6902): http://tools.ietf.org/html/rfc6902");
+            Console.WriteLine();
+
+            Console.WriteLine("Custom");
+            Console.WriteLine("======");
             Console.WriteLine("Transform documents must have a JSON object at their top level");
             Console.WriteLine("Each property of the top level object must be the path pattern to the element or elements to act upon");
             Console.WriteLine("  Each path segment (separated by the / character) must either be a valid regular expression or the token **");

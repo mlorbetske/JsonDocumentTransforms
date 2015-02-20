@@ -1,0 +1,9 @@
+﻿[
+    {
+        "op": "add",
+        "path": "/a/c",
+        "value": {
+            "configuration": "release"
+        }
+    }
+]
