@@ -4,11 +4,11 @@ using Newtonsoft.Json.Linq;
 
 namespace JsonTransform.Core
 {
-    public class CompositeTransform : IObjectTransform
+    public class PatchDocument : IObjectTransform
     {
-        private readonly IEnumerable<IObjectTransform> _transforms;
+        private readonly IEnumerable<PatchTransform> _transforms;
 
-        public CompositeTransform(IEnumerable<IObjectTransform> transforms)
+        public PatchDocument(IEnumerable<PatchTransform> transforms)
         {
             _transforms = transforms;
         }
@@ -25,12 +25,17 @@ namespace JsonTransform.Core
         public static IObjectTransform Load(string filePath)
         {
             var fileText = File.ReadAllText(filePath);
-            var rawTransformObject = JObject.Parse(fileText);
+            var rawTransformObject = JArray.Parse(fileText);
             var transforms = new List<IObjectTransform>();
 
-            foreach (var property in rawTransformObject.Properties())
+            foreach (var transform in rawTransformObject)
             {
-                transforms.Add(new Transform(property));
+                var patch = PatchTransform.Create(transform);
+                
+                if (patch != null)
+                {
+                    transforms.Add(patch);
+                }
             }
 
             return new CompositeTransform(transforms);

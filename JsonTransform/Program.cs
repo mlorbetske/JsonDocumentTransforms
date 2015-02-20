@@ -34,8 +34,8 @@ namespace JsonTransform
             }
 
             var transform = CompositeTransform.Load(transformFile);
-            var source = LoadFile(sourceFile);
-            transform.Apply(source);
+            JToken source = LoadFile(sourceFile);
+            transform.Apply(ref source);
             var outputText = JsonConvert.SerializeObject(source);
 
             if (args.Length == 3)

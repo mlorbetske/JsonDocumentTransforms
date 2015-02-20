@@ -84,7 +84,8 @@ namespace JsonTransform.Core
             _action = transform["action"].ToObject<TransformAction>();
         }
 
-        public void Apply(JToken source)
+        public void Apply<T>(ref T source)
+            where T : JToken
         {
             var allPaths = GetPaths(source);
 

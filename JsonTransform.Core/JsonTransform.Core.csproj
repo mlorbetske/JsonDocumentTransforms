@@ -48,11 +48,23 @@
     <Compile Include="CompositeTransform.cs" />
     <Compile Include="IMatchPredicate.cs" />
     <Compile Include="IObjectTransform.cs" />
+    <Compile Include="JsonPointer.cs" />
+    <Compile Include="MatchPredicateDefinition.cs" />
     <Compile Include="MatchStateMachine.cs" />
+    <Compile Include="PatchAddTransform.cs" />
+    <Compile Include="PatchCopyTransform.cs" />
+    <Compile Include="PatchDocument.cs" />
+    <Compile Include="PatchMoveTransform.cs" />
+    <Compile Include="PatchRemoveTransform.cs" />
+    <Compile Include="PatchReplaceTransform.cs" />
+    <Compile Include="PatchTestTransform.cs" />
+    <Compile Include="PatchTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="TransformAction.cs" />
+    <Compile Include="ValuePredicates\TypeMatch.cs" />
     <Compile Include="ValuePredicates\ValueMatch.cs" />
+    <Compile Include="WalkPlan.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

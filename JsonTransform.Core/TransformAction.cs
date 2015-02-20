@@ -50,7 +50,7 @@ namespace JsonTransform.Core
         [JsonIgnore]
         public IEnumerable<IMatchPredicate> MatchPredicates { get; private set; }
 
-        public void Apply(JToken target, JToken definition)
+        public JToken Apply(JToken target, JToken definition)
         {
             var inst = definition.DeepClone();
             InjectSelfRefs(target, inst);
@@ -58,8 +58,12 @@ namespace JsonTransform.Core
             switch (Type)
             {
                 case ActionType.Replace:
-                    target.Replace(inst);
-                    break;
+                    if (target.Parent != null)
+                    {
+                        target.Replace(inst);
+                    }
+
+                    return inst;
                 case ActionType.Insert:
                     JArray arr = target as JArray;
 
@@ -77,8 +81,10 @@ namespace JsonTransform.Core
                             }
                         }
                     }
-                    break;
+                    return target;
             }
+
+            return target;
         }
 
         private static void InjectSelfRefs(JToken target, JToken definition)
@@ -107,14 +113,5 @@ namespace JsonTransform.Core
                     break;
             }
         }
-    }
-
-    public class MatchPredicateDefinition
-    {
-        [JsonProperty("type")]
-        public string Type { get; set; }
-
-        [JsonProperty("configuration")]
-        public JToken Configuration { get; set; }
     }
 }

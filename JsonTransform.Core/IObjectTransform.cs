@@ -4,6 +4,7 @@ namespace JsonTransform.Core
 {
     public interface IObjectTransform
     {
-        void Apply(JToken source);
+        void Apply<T>(ref T source)
+            where T : JToken;
     }
 }
