@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json.Linq;
 
 namespace JsonTransform.Core
@@ -38,7 +39,7 @@ namespace JsonTransform.Core
                     return PatchCopyTransform.Create(obj, pathString);
             }
 
-            return null;
+            throw new Exception("Unknown JSON Patch operator '" + opString + "'");
         }
 
         public abstract void Apply<T>(ref T source)

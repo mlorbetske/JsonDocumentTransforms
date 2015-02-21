@@ -62,6 +62,9 @@ namespace JsonTransform
 
         private static void ShowHelp(Exception ex = null)
         {
+            Console.WriteLine(Environment.CommandLine);
+            Console.WriteLine();
+
             Console.WriteLine("JsonTransform.exe [-custom] InputFile.json TransformFile.json [Output.json]");
             Console.WriteLine("-custom                  - If specified, indicates that the transform file is not a JSON Patch file");
             Console.WriteLine("InputFile.json           - A JSON document");
@@ -101,6 +104,8 @@ namespace JsonTransform
             Console.WriteLine("     If a property called $existing is found, the object containing it is replaced with the value located by");
             Console.WriteLine("     the path, after the value of the $existing property is processed as a JSON Path (Json.Net) against that");
             Console.WriteLine("     element.");
+
+            Environment.Exit(-1);
         }
 
         private static JObject LoadFile(string file)

@@ -1,0 +1,11 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(JsonTransformExe)' == '' ">
+    <JsonTransformExe>C:\Projects\JsonDocumentTransforms\JsonTransform\bin\debug\JsonTransform.exe</JsonTransformExe>
+  </PropertyGroup>
+  <Target Name="Build" DependsOnTargets="Clean" Inputs="@(None)" Outputs="%(Identity).Dummy">
+    <Message Importance="High" Text="Transforming @(None -> '%(Identity)') with @(None -> '%(Filename).$(Configuration).json-patch')" Condition="@(None -> '%(CopyToOutputDirectory)') == Always AND Exists(@(None -> '%(Filename).$(Configuration).json-patch'))" />
+    <Exec 
+      Condition="@(None -> '%(CopyToOutputDirectory)') == Always AND Exists(@(None -> '%(Filename).$(Configuration).json-patch'))"
+      Command="&quot;$(JsonTransformExe)&quot; &quot;@(None -> '%(Identity)')&quot; &quot;@(None -> '%(Filename).$(Configuration).json-patch')&quot; &quot;$(ProjectDir)@(None -> '$(OutputPath)%(Identity)')&quot;" CustomErrorRegularExpression="" IgnoreExitCode="false" ContinueOnError="false" ConsoleToMSBuild="true" Outputs="%(None.Identity)" />
+  </Target>
+</Project>

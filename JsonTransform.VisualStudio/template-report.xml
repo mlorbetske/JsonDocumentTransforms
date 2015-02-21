@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TemplateReport>
+  <ItemTemplates>
+    <ItemTemplate Path="ItemTemplates\Web\Markup\JSONPatch\Definitions\CSharp.vstemplate" Name="JSON Patch" Description="&lt;A JSON Patch File&gt;" ProjectType="CSharp" ProjectSubType="" />
+    <ItemTemplate Path="ItemTemplates\Web\Markup\JSONPatch\Definitions\VB.vstemplate" Name="JSON Patch" Description="&lt;A JSON Patch File&gt;" ProjectType="VisualBasic" ProjectSubType="" />
+    <ItemTemplate Path="ItemTemplates\Web\Markup\JSONPatch\Definitions\Web.csharp.vstemplate" Name="JSON Patch" Description="&lt;A JSON Patch File&gt;" ProjectType="Web" ProjectSubType="CSharp" />
+    <ItemTemplate Path="ItemTemplates\Web\Markup\JSONPatch\Definitions\Web.VB.vstemplate" Name="JSON Patch" Description="&lt;A JSON Patch File&gt;" ProjectType="Web" ProjectSubType="VisualBasic" />
+  </ItemTemplates>
+  <ProjectTemplates />
+  <Snippets />
+</TemplateReport>
